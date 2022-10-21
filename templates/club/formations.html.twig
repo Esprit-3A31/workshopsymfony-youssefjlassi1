@@ -1,0 +1,84 @@
+<img src="{{asset('img/me.jpg')}}" alt="moi" height="300px" width="250px">
+
+<h1> la liste des formation de la classe {{classe}} dans la classe {{salle}}</h1>
+{% if listeFormation is empty %}
+<h6> Tab vide</h6>
+{% else %}
+<table >
+<tr>
+<td>Ref </td>
+<td>Titre </td>
+<td>Description </td>
+<td>Nombre de participants </td>
+<td> Participer</td>
+</tr>
+<tr>
+
+
+
+{% for f in listeFormation %}
+
+<tr>
+
+<td> {{f.ref}} </td>
+<td> {{f.Titre| upper}} </td>
+<td> {{f.Description}} </td>
+<td> {{f.nb_participants}} </td>
+
+<td>{% if f.nb_participants==0 %}
+<a href="{{path('app_reservation')}}"> Participer</a>
+{% else %}complet
+{% endif %}</td>
+
+{% endfor %}
+{%endif%}
+</tr>
+</table>
+
+
+ 
+
+
+
+{% set max=0 %}
+{% set form="aucune"%}
+{% set x=0 %}
+{% set nbform=0 %}
+<h4> Affichage des formations théoriques</h4>
+<table >
+<tr>
+
+<td>Titre </td>
+
+</tr>
+
+
+
+{% for f in listeFormation %}
+
+{% if f.Description =="formation theorique" %}
+<tr>
+
+<td> {{f.Titre| upper}} </td>
+
+
+
+{% endif %}
+
+
+</tr>
+
+
+
+{% if f.nb_participants >= max %}
+{% set max = f.nb_participants %}
+{% set form = f.Titre %}
+{% endif %}
+{% set nbform = nbform + 1 %}
+{% set x = x + f.nb_participants %}
+{% endfor %}
+</table>
+<br>
+Le nombre total des formations : {{nbform}} <br>
+la formation qui a le plus grand nombre des participants : {{form}} <br>
+nombre total des participant dans toutes les formations = {{x}} 
