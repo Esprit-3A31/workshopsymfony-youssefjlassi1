@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\ClassRoom;
 use App\Form\ClassroomType;
+use App\Repository\StudentRepository;
 
 class ClassroomController extends AbstractController
 {
@@ -86,6 +87,15 @@ class ClassroomController extends AbstractController
         $em->remove($classroom);
         $em->flush();
         return $this->redirectToRoute("addClassroomForm");
+    }
+
+    #[Route('/showClassroom/{id}', name: 'showClassroom')]
+    public function showClasssroom(classroomRepository $repository, StudentRepository $repo,$id)
+    {
+
+        $classroom=$repository->find($id);
+        $students=$repo->getStudentsByClassroom($id);
+        return $this->render("classroom/showClassroom.html.twig",array("classroom"=>$classroom,'students'=>$students));
     }
 
 }

@@ -1,6 +1,13 @@
-{% for c in tabstudents %}
+{% for c in nce %}
 
 nce: {{c.nce}}
 username : {{c.username}}
+<br>
+{% endfor %}
+{% for c in topStudents %}
+
+nce: {{c.nce}}
+username : {{c.username}}
+moyenne:{{c.moyenne}}
 <br>
 {% endfor %}

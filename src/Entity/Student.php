@@ -20,6 +20,9 @@ class Student
  
     private ?ClassRoom $classRoom = null;
 
+    #[ORM\Column]
+    private ?float $moyenne = null;
+
 
     public function getNce(): ?string
     {
@@ -53,6 +56,18 @@ class Student
     public function setClassRoom(?ClassRoom $classRoom): self
     {
         $this->classRoom = $classRoom;
+
+        return $this;
+    }
+
+    public function getMoyenne(): ?float
+    {
+        return $this->moyenne;
+    }
+
+    public function setMoyenne(float $moyenne): self
+    {
+        $this->moyenne = $moyenne;
 
         return $this;
     }

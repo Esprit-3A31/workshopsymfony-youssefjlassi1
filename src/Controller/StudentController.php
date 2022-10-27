@@ -24,7 +24,10 @@ class StudentController extends AbstractController
     public function liststudent(StudentRepository $repository)
     {
       $students=$repository->findAll();
-      return $this-> render ("student/student.html.twig",array('tabstudents'=>$students));
+      $sortByNce = $repository->sortByNCE() ;
+      $topStudents= $repository->topStudent();
+
+      return $this-> render ("student/student.html.twig",array('tabstudents'=>$students,'nce'=>$sortByNce,'topStudents'=>$topStudents));
     }
     #[Route('/addStudentForm', name: 'addStudentForm')]
     public function addStudentForm(Request  $request,ManagerRegistry $doctrine)
@@ -36,6 +39,7 @@ class StudentController extends AbstractController
              $em= $doctrine->getManager();
              $em->persist($student);
              $em->flush();
+
              return  $this->redirectToRoute("addStudentForm");
          }
         return $this->renderForm("student/add.html.twig",array("FormStudent"=>$form));
